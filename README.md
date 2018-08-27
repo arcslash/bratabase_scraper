@@ -2,7 +2,8 @@
 
 A simple scrapper to scrape data from the site [bratabase](https://www.bratabase.com/) which is a simple site to solve bra related tasks.Site changes may affect the performance of the script,
 
-The script will generate a folder hierarchy as below,\n  
+The script will generate a folder hierarchy as below,
+  
 ├── outputs                 
     &nbsp;&nbsp;&nbsp;├── images                    
     &nbsp;&nbsp;&nbsp;├── labels
