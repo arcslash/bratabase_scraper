@@ -12,11 +12,7 @@
     description:"description"
   }
 ],
-  fit:{
-    Center gore placement:"",
-    Band fit:"",
-    Cup's width:"",
-  }
+  fit_info:""
   description:"super description",
   brand:"bla bla",
   size:"type of this bra",

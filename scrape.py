@@ -12,8 +12,8 @@ import wget
 import json
 
 output_path = "outputs/"
-images_path = output_path + "/images/"
-labels_path = output_path + "/labels/"
+images_path = output_path + "images/"
+labels_path = output_path + "labels/"
 url1 = "https://www.bratabase.com/troubleshoot/"
 url2 = "https://www.bratabase.com/troubleshoot/closed/"
 if not os.path.exists(images_path):
@@ -57,15 +57,19 @@ for url in urls:
         for link in main_links:
             driver.get(link)
             time.sleep(3)
+            image_src = ""
+            image_details = ""
+            image_index_size = ""
+            image_brand = ""
+            image_size = ""
 
-            # image_des = driver.find_elements_by_xpath('.//blockquote/p')[0].text
-            # image_fit_center = driver.find_elements_by_xpath('.//div[@class="related-info fit-summary"]/p')[0].text
-            # image_fit_band = driver.find_elements_by_xpath('.//blockquote/p')[0].text
-            # image_fit_cup = driver.find_elements_by_xpath('.//blockquote/p')[0].text
-            # print("Image Description:", image_des)
-            # print("Image Fit Center:", image_fit_center)
-            # print("Image Fit Band:", image_fit_band)
-            # print("Image Fit_cup:", image_fit_cup)
+
+            image_des = driver.find_elements_by_xpath('.//blockquote')[0].text
+            image_fit = driver.find_elements_by_xpath('.//div[@class="related-info fit-summary"]')[0].text
+
+
+            print("Image Description:", image_des)
+            print("Image Fit Center:", image_fit)
             images = []
             for image in driver.find_elements_by_xpath('.//a[@class="pic-box"]'):
                 print("Attribute:",image.get_attribute("href"))
@@ -85,13 +89,23 @@ for url in urls:
                 print("Index size:", image_index_size)
                 print("Brand:", image_brand)
                 print("Size:", image_size)
+                image_save = images_path + image_src.split("/")[len(image_src.split("/"))-1]
+                print("Filepath:",image_save)
+                #output_json['images'].append({'location':image_save, 'description':image_details})
+
+
                 #build json
                 # output_json['images'].append({'location':image_src, 'description':image_details})
                 time.sleep(5)
             output_json['brand'] = image_brand
             output_json['size'] = image_size
             output_json['index_size'] = image_index_size
-            output_json['description'] = "main description"
+            output_json['description'] = image_des
+            output_json['fit_info'] = image_fit
+            #output_json_ex = json.loads({output_json})
+            # output_json = {}
+            print(output_json)
+            exit(0)
     except Exception as err:
         print("[-]Error:{0}".format(err))
     driver.quit()
