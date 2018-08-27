@@ -38,6 +38,7 @@ for url in urls:
     try:
         while("404 - There are no bras on this page" not in driver.find_element_by_tag_name('h1').text):
             driver.get(url1 + '?page='+str(page_no))
+            time.sleep(3)
             print("[+]Moving to URL:{}".format(url + '?page='+str(page_no)))
             try:
                  for link in driver.find_elements_by_class_name('fit-request-list-item'):
@@ -50,18 +51,28 @@ for url in urls:
         print("[-]Error:{0}".format(err))
 
     ##scrapping the main_links
+    print("[+]Start Scrapping...")
     try:
         output_json = {}
         for link in main_links:
             driver.get(link)
             time.sleep(3)
-            #images = driver.find_elements_by_xpath("//img[@class='photo']")
+
+            # image_des = driver.find_elements_by_xpath('.//blockquote/p')[0].text
+            # image_fit_center = driver.find_elements_by_xpath('.//div[@class="related-info fit-summary"]/p')[0].text
+            # image_fit_band = driver.find_elements_by_xpath('.//blockquote/p')[0].text
+            # image_fit_cup = driver.find_elements_by_xpath('.//blockquote/p')[0].text
+            # print("Image Description:", image_des)
+            # print("Image Fit Center:", image_fit_center)
+            # print("Image Fit Band:", image_fit_band)
+            # print("Image Fit_cup:", image_fit_cup)
             images = []
             for image in driver.find_elements_by_xpath('.//a[@class="pic-box"]'):
                 print("Attribute:",image.get_attribute("href"))
                 images.append(image.get_attribute("href"))
             for image in images:
                 driver.get(image)
+                time.sleep(5)
                 image_src = driver.find_elements_by_xpath('.//img')[0].get_attribute("src")
                 image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
                 image_index_size = driver.find_elements_by_xpath('.//span[@class="index-size"]')[0].text
@@ -69,14 +80,13 @@ for url in urls:
                 image_size = driver.find_elements_by_xpath('.//span[@class="size-str"]')[0].text
                 print("Image src:", image_src)
                 wget.download(image_src, images_path)
+                time.sleep(5)
                 print("Details:", image_details)
                 print("Index size:", image_index_size)
                 print("Brand:", image_brand)
                 print("Size:", image_size)
-
-
                 #build json
-                output_json['images'].append({'location':image_src, 'description':image_details})
+                # output_json['images'].append({'location':image_src, 'description':image_details})
                 time.sleep(5)
             output_json['brand'] = image_brand
             output_json['size'] = image_size
