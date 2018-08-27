@@ -24,8 +24,12 @@ where label files contains individual entries on the site with a (Json file)[htt
     description:"description"
   }
 ],
+  fit:{
+    Center gore placement:"",
+    Band fit:"",
+    Cup's width:"",
+  }
   description:"super description",
-  suggestions:["suggestion1","suggestion2"]
   brand:"bla bla",
   size:"type of this bra",
   index_size:"type of this bra",
