@@ -11,25 +11,38 @@ The script will generate a folder hierarchy as below,
 where label files contains individual entries on the site with a [Json file](https://github.com/isharaux/bratabase_scraper/blob/master/sample.json) in the following format
 ```
 {
-    "brand": "Curvy Kate",
-    "description": "You may not be able to see it in the photo, but the left cup cuts into breast tissue a little, causing a subtle quad-boob effect.\nIf I look at the end of the wire from the side, I see that the part of the underwire pocket that\"s empty (doesn\"t contain wire) is strained.\nThe back lies horizontally, but there are bulges around the band.\nMy guess is that I need to go up maybe one cup size. Any observations or suggestions?\nThe wires at the center dig into my breast tissue. But I don\"t think this is a sizing issue; my boobs are just very close together.",
-    "fit_info": "Fit issues\nCenter gore comfort: Underwires dig into sternum, because they are too high\nStrap separation: Are too far apart\nTop of the cup: Cuts into breast tissue (quad boob effect)\nCups separation: Too separate for my boobs",
+    "brand": "Panache",
+    "description": "There is wrinkling along the bottom and outer edges of the cups, the gore does not fully tack (it may be resting on my breast tissue?), and there is the slightest of quadding in the upper lace part of the cups. Other than these issues, this bra is comfortable.\nI have tried the 32G, but the wrinkling along the bottom and edges were even more apparent; however, the gore did tack. I do not have any other bras to use as a reference, unfortunately.\nI am an even 2/5 when properly supported and believe I\"m projected. I also have prominent \"puffy\" nipples that get squished when I\"m wearing bras, so when I measured, I gently squished them down with the cloth measuring tape.\nWhat does this fit say about my breast shape? Did I just pick the wrong size? I would love advice and suggestions!",
+    "fit_info": "Fit issues\nCenter gore placement: Doesn\"t lie flat against sternum\nTop of the cup: Cuts into breast tissue (quad boob effect)\nCup\"s width: There is empty fabric on the sides (Cup too wide)",
     "images": [
         {
             "description": "",
-            "location": "outputs/images/n_dhliy/983c2023c2af5d200cb71fbd3489fcb1.jpg"
+            "location": "outputs/images/n_dizo7/ab58210404dccbaafc5dd1bc37b28bcb.jpg"
         },
         {
             "description": "",
-            "location": "outputs/images/n_dhliy/c9ab22777725995779d83639d96cb3d6.jpg"
+            "location": "outputs/images/n_dizo7/0df6aee644d6b57f57b3a3eae82aad63.jpg"
+        },
+        {
+            "description": "Slight wrinkling along the outer edges.",
+            "location": "outputs/images/n_dizo7/e72f6cd474232e197e845aa6eab14f3b.jpg"
+        },
+        {
+            "description": "Notice the wrinkling above the wire.",
+            "location": "outputs/images/n_dizo7/00e05043048336b69a43224b0814eb90.jpg"
+        },
+        {
+            "description": "Gore does not completely tack.",
+            "location": "outputs/images/n_dizo7/329cc9e3a608d26bed52d8a7945f8606.jpg"
         },
         {
             "description": "",
-            "location": "outputs/images/n_dhliy/71e3047aeea9a18389dbb68d8c224187.jpg"
+            "location": "outputs/images/n_dizo7/a89333f558124b418b5cf5c6cf9bc119.jpg"
         }
     ],
-    "index_size": "28:8",
-    "size": "28FF"
+    "index_size": "32:8",
+    "model": "Envy Balconnet Bra (7285)",
+    "size": "32FF"
 }
 
 ```

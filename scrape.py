@@ -14,7 +14,7 @@ from pathlib import Path
 import zipfile
 
 #release or development set r for release and d for dev
-type = 'd'
+type = 'r'
 # type = 'r'
 
 ch_driver = Path("chromedriver")
@@ -59,6 +59,7 @@ for url in urls:
             except NoSuchElementException as err:
                 print("[-]Error:{0}".format(err))
             page_no = page_no + 1
+            break#remove
     except Exception as err:
         print("[-]Error:{0}".format(err))
 
@@ -78,6 +79,13 @@ for url in urls:
                 pre = "n_"
             else:
                 pre = "r_"
+            try:
+                b_brand = driver.find_elements_by_xpath('.//h2//a')[0].text
+                b_model = driver.find_elements_by_xpath('.//h2//a')[1].text
+                b_size = driver.find_elements_by_xpath('.//h2//a')[2].text
+                b_index_size = driver.find_elements_by_xpath('.//h2//span')[0].text
+            except:
+                continue
 
 
             json_save = labels_path +pre +(link.split("/")[len(link.split("/"))-2]) + ".json"
@@ -96,17 +104,19 @@ for url in urls:
                 images.append(image.get_attribute("href"))
             image_arr = []
             for image in images:
+                print("[+]Getting Image:",image)
                 driver.get(image)
                 time.sleep(5)
                 image_src = driver.find_elements_by_xpath('.//img')[0].get_attribute("src")
-                image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
-                image_index_size = driver.find_elements_by_xpath('.//span[@class="index-size"]')[0].text
-                image_brand = driver.find_elements_by_xpath('.//span[@class="brand-name"]')[0].text
-                image_size = driver.find_elements_by_xpath('.//span[@class="size-str"]')[0].text
                 print("Image src:", image_src)
+                image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
                 print("Details:", image_details)
+                image_index_size = driver.find_elements_by_xpath('.//span[@class="index-size"]')[0].text if(len(driver.find_elements_by_xpath('.//span[@class="index-size"]'))>0) else b_index_size
                 print("Index size:", image_index_size)
+                image_brand =  driver.find_elements_by_xpath('.//span[@class="brand-name"]')[0].text if(len(driver.find_elements_by_xpath('.//span[@class="brand-name"]'))>0) else b_brand
                 print("Brand:", image_brand)
+                print("Model:", b_model)
+                image_size = driver.find_elements_by_xpath('.//span[@class="size-str"]')[0].text if(len(driver.find_elements_by_xpath('.//span[@class="size-str"]'))>0) else b_size
                 print("Size:", image_size)
                 image_save = images_path +pre +(link.split("/")[len(link.split("/"))-2]) +"/" +image_src.split("/")[len(image_src.split("/"))-1]
                 if not os.path.exists(images_path +pre + (link.split("/")[len(link.split("/"))-2])):
@@ -119,6 +129,7 @@ for url in urls:
                 time.sleep(5)
             output_json['images'] = image_arr
             output_json['brand'] = image_brand.replace("'", '"')
+            output_json['model'] = b_model.replace("'", '"')
             output_json['size'] = image_size.replace("'", '"')
             output_json['index_size'] = image_index_size.replace("'", '"')
             output_json['description'] = image_des.replace("'", '"')
