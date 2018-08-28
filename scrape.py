@@ -104,14 +104,15 @@ for url in urls:
                 image_brand = driver.find_elements_by_xpath('.//span[@class="brand-name"]')[0].text
                 image_size = driver.find_elements_by_xpath('.//span[@class="size-str"]')[0].text
                 print("Image src:", image_src)
-                wget.download(image_src, images_path)
-                print(" Image Saved:", images_path)
-                time.sleep(5)
                 print("Details:", image_details)
                 print("Index size:", image_index_size)
                 print("Brand:", image_brand)
                 print("Size:", image_size)
-                image_save = images_path + image_src.split("/")[len(image_src.split("/"))-1]
+                image_save = images_path +pre +(link.split("/")[len(link.split("/"))-2]) +"/" +image_src.split("/")[len(image_src.split("/"))-1]
+                if not os.path.exists(images_path +pre + (link.split("/")[len(link.split("/"))-2])):
+                    os.makedirs(images_path +pre + (link.split("/")[len(link.split("/"))-2]))
+                wget.download(image_src, image_save)
+                print(" Image Saved:", image_save)
 
                 print("Filepath:",image_save)
                 image_arr.append({"location":str(image_save).replace("'", '"'),"description":str(image_details).replace("'", '"')})
@@ -128,6 +129,7 @@ for url in urls:
             print(output_json)
             output_json = {}
             if type == 'd':
+                driver.quit()
                 exit(0)
     except Exception as err:
         print("[-]Error:{0}".format(err))
