@@ -8,7 +8,7 @@ The script will generate a folder hierarchy as below,
     &nbsp;&nbsp;&nbsp;├── images                    
     &nbsp;&nbsp;&nbsp;├── labels
 
-where label files contains individual entries on the site with a (Json file)[https://github.com/isharaux/bratabase_scraper/blob/master/sample.json] in the following format
+where label files contains individual entries on the site with a [Json file](https://github.com/isharaux/bratabase_scraper/blob/master/sample.json) in the following format
 ```
 {
   images:[{
@@ -48,8 +48,7 @@ pip install -r requirements.txt
 
 Run scrape.py
 
-'''
-
+```
 python scrape.py
 
-'''
+```
