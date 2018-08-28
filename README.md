@@ -36,3 +36,20 @@ where label files contains individual entries on the site with a (Json file)[htt
 
 }
 ```
+
+** USEAGE
+
+Install the python dependencies from requirements.txt
+
+```
+pip install -r requirements.txt
+
+```
+
+Run scrape.py
+
+'''
+
+python scrape.py
+
+'''
