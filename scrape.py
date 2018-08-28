@@ -115,16 +115,16 @@ for url in urls:
                 print(" Image Saved:", image_save)
 
                 print("Filepath:",image_save)
-                image_arr.append({"location":str(image_save).replace("'", '"'),"description":str(image_details).replace("'", '"')})
+                image_arr.append({"location":image_save.replace("'", '"'),"description":image_details.replace("'", '"')})
                 time.sleep(5)
-            output_json['images'] = str(image_arr).replace("'", '"')
-            output_json['brand'] = str(image_brand).replace("'", '"')
-            output_json['size'] = str(image_size).replace("'", '"')
-            output_json['index_size'] = str(image_index_size).replace("'", '"')
-            output_json['description'] = str(image_des).replace("'", '"')
-            output_json['fit_info'] = str(image_fit).replace("'", '"')
+            output_json['images'] = image_arr
+            output_json['brand'] = image_brand.replace("'", '"')
+            output_json['size'] = image_size.replace("'", '"')
+            output_json['index_size'] = image_index_size.replace("'", '"')
+            output_json['description'] = image_des.replace("'", '"')
+            output_json['fit_info'] = image_fit.replace("'", '"')
             with open(json_save, "wb") as f:
-                f.write(json.dumps(output_json).encode("utf-8"))
+                f.write(json.dumps(output_json, sort_keys=True, indent=4).encode("utf-8"))
             print("[+]File Saved:",json_save)
             print(output_json)
             output_json = {}
