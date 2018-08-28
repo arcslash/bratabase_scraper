@@ -43,15 +43,16 @@ prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome('./chromedriver',chrome_options=chrome_options)
 urls = [url1, url2]
+# urls = [url2]
 for url in urls:
     main_links = []
     page_no = 20 if (type == 'd') else 1
     driver.get(url + '?page='+str(page_no))
+    time.sleep(random.randint(1,3))
     print("[+]Moving to URL:{}".format(url + '?page='+str(page_no)))
     try:
         while("404 - There are no bras on this page" not in driver.find_element_by_tag_name('h1').text):
-            driver.get(url1 + '?page='+str(page_no))
-            time.sleep(3)
+            driver.get(url + '?page='+str(page_no))
             print("[+]Moving to URL:{}".format(url + '?page='+str(page_no)))
             try:
                  for link in driver.find_elements_by_class_name('fit-request-list-item'):
@@ -71,7 +72,7 @@ for url in urls:
         for link in main_links:
             print("[+]Adding New Entry...",link)
             driver.get(link)
-            time.sleep(random.randint(4,10))
+            time.sleep(random.randint(1,3))
             image_src = ""
             image_details = ""
             image_index_size = ""
@@ -102,7 +103,7 @@ for url in urls:
             for image in images:
                 print("[+]Getting Image:",image)
                 driver.get(image)
-                time.sleep(random.randint(4,10))
+                time.sleep(random.randint(1,3))
                 image_src = driver.find_elements_by_xpath('.//img')[0].get_attribute("src")
                 print("Image src:", image_src)
                 image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
@@ -122,7 +123,6 @@ for url in urls:
 
                 print("Filepath:",image_save)
                 image_arr.append({"location":image_save.replace("'", '"'),"description":image_details.replace("'", '"')})
-                time.sleep(random.randint(4,10))
             output_json['images'] = image_arr
             output_json['brand'] = image_brand.replace("'", '"')
             output_json['model'] = b_model.replace("'", '"')
