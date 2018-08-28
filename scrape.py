@@ -13,6 +13,10 @@ import json
 from pathlib import Path
 import zipfile
 
+#release or development set r for release and d for dev
+type = 'd'
+# type = 'r'
+
 ch_driver = Path("chromedriver")
 if not ch_driver.exists():
     wget.download('https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip')
@@ -40,7 +44,7 @@ driver = webdriver.Chrome('./chromedriver',chrome_options=chrome_options)
 urls = [url1, url2]
 for url in urls:
     main_links = []
-    page_no = 20
+    page_no = 20 if (type == 'd') else 1
     driver.get(url + '?page='+str(page_no))
     print("[+]Moving to URL:{}".format(url + '?page='+str(page_no)))
     try:
@@ -70,8 +74,14 @@ for url in urls:
             image_index_size = ""
             image_brand = ""
             image_size = ""
+            if(url == url1):
+                pre = "n_"
+            else:
+                pre = "r_"
 
-            json_save = ""
+
+            json_save = labels_path +pre +(link.split("/")[len(link.split("/"))-2]) + ".json"
+
 
 
             image_des = driver.find_elements_by_xpath('.//blockquote')[0].text
@@ -95,27 +105,30 @@ for url in urls:
                 image_size = driver.find_elements_by_xpath('.//span[@class="size-str"]')[0].text
                 print("Image src:", image_src)
                 wget.download(image_src, images_path)
+                print(" Image Saved:", images_path)
                 time.sleep(5)
                 print("Details:", image_details)
                 print("Index size:", image_index_size)
                 print("Brand:", image_brand)
                 print("Size:", image_size)
                 image_save = images_path + image_src.split("/")[len(image_src.split("/"))-1]
-                json_save = images_path + (image_src.split("/")[len(image_src.split("/"))-1]).replace(".jpg",".json")
+
                 print("Filepath:",image_save)
-                image_arr.append({"location":image_save,"description":image_details})
+                image_arr.append({"location":str(image_save).replace("'", '"'),"description":str(image_details).replace("'", '"')})
                 time.sleep(5)
-            output_json['images'] = image_arr
-            output_json['brand'] = image_brand
-            output_json['size'] = image_size
-            output_json['index_size'] = image_index_size
-            output_json['description'] = image_des
-            output_json['fit_info'] = image_fit
+            output_json['images'] = str(image_arr).replace("'", '"')
+            output_json['brand'] = str(image_brand).replace("'", '"')
+            output_json['size'] = str(image_size).replace("'", '"')
+            output_json['index_size'] = str(image_index_size).replace("'", '"')
+            output_json['description'] = str(image_des).replace("'", '"')
+            output_json['fit_info'] = str(image_fit).replace("'", '"')
             with open(json_save, "wb") as f:
                 f.write(json.dumps(output_json).encode("utf-8"))
+            print("[+]File Saved:",json_save)
             print(output_json)
             output_json = {}
-            exit(0)
+            if type == 'd':
+                exit(0)
     except Exception as err:
         print("[-]Error:{0}".format(err))
     driver.quit()
