@@ -10,7 +10,15 @@ import os
 import time
 import wget
 import json
+from pathlib import Path
+import zipfile
 
+ch_driver = Path("chromedriver")
+if not ch_driver.exists():
+    wget.download('https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip')
+    zip_ref = zipfile.ZipFile("chromedriver", 'r')
+    zip_ref.extractall()
+    zip_ref.close()
 output_path = "outputs/"
 images_path = output_path + "images/"
 labels_path = output_path + "labels/"
@@ -63,6 +71,8 @@ for url in urls:
             image_brand = ""
             image_size = ""
 
+            json_save = ""
+
 
             image_des = driver.find_elements_by_xpath('.//blockquote')[0].text
             image_fit = driver.find_elements_by_xpath('.//div[@class="related-info fit-summary"]')[0].text
@@ -74,6 +84,7 @@ for url in urls:
             for image in driver.find_elements_by_xpath('.//a[@class="pic-box"]'):
                 print("Attribute:",image.get_attribute("href"))
                 images.append(image.get_attribute("href"))
+            image_arr = []
             for image in images:
                 driver.get(image)
                 time.sleep(5)
@@ -90,21 +101,20 @@ for url in urls:
                 print("Brand:", image_brand)
                 print("Size:", image_size)
                 image_save = images_path + image_src.split("/")[len(image_src.split("/"))-1]
+                json_save = images_path + (image_src.split("/")[len(image_src.split("/"))-1]).replace(".jpg",".json")
                 print("Filepath:",image_save)
-                #output_json['images'].append({'location':image_save, 'description':image_details})
-
-
-                #build json
-                # output_json['images'].append({'location':image_src, 'description':image_details})
+                image_arr.append({"location":image_save,"description":image_details})
                 time.sleep(5)
+            output_json['images'] = image_arr
             output_json['brand'] = image_brand
             output_json['size'] = image_size
             output_json['index_size'] = image_index_size
             output_json['description'] = image_des
             output_json['fit_info'] = image_fit
-            #output_json_ex = json.loads({output_json})
-            # output_json = {}
+            with open(json_save, "wb") as f:
+                f.write(json.dumps(output_json).encode("utf-8"))
             print(output_json)
+            output_json = {}
             exit(0)
     except Exception as err:
         print("[-]Error:{0}".format(err))

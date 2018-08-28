@@ -11,7 +11,8 @@ The script will generate a folder hierarchy as below,
 where label files contains individual entries on the site with a [Json file](https://github.com/isharaux/bratabase_scraper/blob/master/sample.json) in the following format
 ```
 {
-  images:[{
+  images:[
+  {
     location:"images/image1.jpg",
     description:"description"
   },
@@ -24,17 +25,14 @@ where label files contains individual entries on the site with a [Json file](htt
     description:"description"
   }
 ],
-  fit:{
-    Center gore placement:"",
-    Band fit:"",
-    Cup's width:"",
-  }
+  fit_info:""
   description:"super description",
   brand:"bla bla",
   size:"type of this bra",
   index_size:"type of this bra",
 
 }
+
 ```
 
 ** USEAGE
