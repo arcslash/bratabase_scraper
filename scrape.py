@@ -12,6 +12,7 @@ import wget
 import json
 from pathlib import Path
 import zipfile
+import random
 
 #release or development set r for release and d for dev
 type = 'r'
@@ -59,7 +60,7 @@ for url in urls:
             except NoSuchElementException as err:
                 print("[-]Error:{0}".format(err))
             page_no = page_no + 1
-            break#remove
+
     except Exception as err:
         print("[-]Error:{0}".format(err))
 
@@ -68,8 +69,9 @@ for url in urls:
     try:
         output_json = {}
         for link in main_links:
+            print("[+]Adding New Entry...",link)
             driver.get(link)
-            time.sleep(3)
+            time.sleep(random.randint(4,10))
             image_src = ""
             image_details = ""
             image_index_size = ""
@@ -84,18 +86,12 @@ for url in urls:
                 b_model = driver.find_elements_by_xpath('.//h2//a')[1].text
                 b_size = driver.find_elements_by_xpath('.//h2//a')[2].text
                 b_index_size = driver.find_elements_by_xpath('.//h2//span')[0].text
-            except:
+            except Exception as err:
+                print("[-]Error:{} - Skipping...".format(err))
                 continue
-
-
             json_save = labels_path +pre +(link.split("/")[len(link.split("/"))-2]) + ".json"
-
-
-
             image_des = driver.find_elements_by_xpath('.//blockquote')[0].text
             image_fit = driver.find_elements_by_xpath('.//div[@class="related-info fit-summary"]')[0].text
-
-
             print("Image Description:", image_des)
             print("Image Fit Center:", image_fit)
             images = []
@@ -106,7 +102,7 @@ for url in urls:
             for image in images:
                 print("[+]Getting Image:",image)
                 driver.get(image)
-                time.sleep(5)
+                time.sleep(random.randint(4,10))
                 image_src = driver.find_elements_by_xpath('.//img')[0].get_attribute("src")
                 print("Image src:", image_src)
                 image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
@@ -126,7 +122,7 @@ for url in urls:
 
                 print("Filepath:",image_save)
                 image_arr.append({"location":image_save.replace("'", '"'),"description":image_details.replace("'", '"')})
-                time.sleep(5)
+                time.sleep(random.randint(4,10))
             output_json['images'] = image_arr
             output_json['brand'] = image_brand.replace("'", '"')
             output_json['model'] = b_model.replace("'", '"')

@@ -8,7 +8,7 @@ The script will generate a folder hierarchy as below,
     &nbsp;&nbsp;&nbsp;├── images                    
     &nbsp;&nbsp;&nbsp;├── labels
 
-where label files contains individual entries on the site with a [Json file](https://github.com/isharaux/bratabase_scraper/blob/master/sample.json) in the following format
+where label files contain individual entries on the site with a [Json file](https://github.com/isharaux/bratabase_scraper/blob/master/sample.json) in the following format
 ```
 {
     "brand": "Panache",
@@ -49,7 +49,7 @@ where label files contains individual entries on the site with a [Json file](htt
 
 ## USEAGE
 
-Install the python dependencies from requirements.txt
+Install python dependencies from requirements.txt
 
 ```
 pip install -r requirements.txt
