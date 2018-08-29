@@ -48,7 +48,7 @@ for url in urls:
     main_links = []
     page_no = 20 if (type == 'd') else 1
     driver.get(url + '?page='+str(page_no))
-    time.sleep(random.randint(1,3))
+    # time.sleep(random.randint(1,3))
     print("[+]Moving to URL:{}".format(url + '?page='+str(page_no)))
     try:
         while("404 - There are no bras on this page" not in driver.find_element_by_tag_name('h1').text):
@@ -60,10 +60,12 @@ for url in urls:
                      main_links.append(link.get_attribute("href"))
             except NoSuchElementException as err:
                 print("[-]Error:{0}".format(err))
+                continue
             page_no = page_no + 1
 
     except Exception as err:
         print("[-]Error:{0}".format(err))
+        continue
 
     ##scrapping the main_links
     print("[+]Start Scrapping...")
@@ -72,7 +74,7 @@ for url in urls:
         for link in main_links:
             print("[+]Adding New Entry...",link)
             driver.get(link)
-            time.sleep(random.randint(1,3))
+            # time.sleep(random.randint(1,3))
             image_src = ""
             image_details = ""
             image_index_size = ""
@@ -103,7 +105,7 @@ for url in urls:
             for image in images:
                 print("[+]Getting Image:",image)
                 driver.get(image)
-                time.sleep(random.randint(1,3))
+                # time.sleep(random.randint(1,3))
                 image_src = driver.find_elements_by_xpath('.//img')[0].get_attribute("src")
                 print("Image src:", image_src)
                 image_details = driver.find_elements_by_xpath('.//figcaption')[0].text
@@ -140,4 +142,5 @@ for url in urls:
                 exit(0)
     except Exception as err:
         print("[-]Error:{0}".format(err))
+        continue
     driver.quit()
